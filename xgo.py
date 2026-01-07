@@ -141,7 +141,7 @@ def pinca_z(valor):
     escriure_byte(_ADRECA_PINCA_Z, valor & 0xFF)
 
 def pinca(valor):
-    xgo.escriure_byte(0x71, valor)
+    escriure_byte(_ADRECA_PINCA, valor & 0xFF)
 
 # --- Accions ---
 _DUR = (0,
@@ -284,3 +284,4 @@ def forget():
     except:
 
         return False
+
