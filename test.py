@@ -2,12 +2,11 @@
 from microbit import *
 import xgo
 import radio
+import music
 # no cal inicialitzar la ràdio, ja s'ha inicialitzat des de main.py
 
 # ==== funció principal cridada des de main.py ====
 def executar():    
-    display.clear()
-    display.show(Image.ARROW_N)    # suport visual
     xgo.posicio_inicial_estable()  # deixa el robot en estat neutre i estable inicial
 
     while True:   # accions condicionades a la recepció de missatges de ràdio 
@@ -29,45 +28,13 @@ def executar():
 # ==== accions a executar, definides com a funcions ====
 
 def accio_1():
-    display.show('C')
-    aprendre_2_cares()
-
+    music.pitch (1000, 200)    # beep curt (freqüència 1000 Hz (to), durada 200 ms)
+    
 def accio_2():
-    display.show('D')
-    caminar_amb_1_i_parar_amb_2()
+    music.pitch (1000, 200)
 
 def accio_3():
-    display.show('E')
-
-def accio_4():
-    display.show('F')
+    music.pitch (1000, 200)
     
-# Funcions HuskyLens ==================
-
-def aprendre_2_cares():
-    xgo.set_algorithm(xgo.FACE)
-
-    display.show('1')
-    while xgo.get_block() is None:
-        sleep(100)
-    xgo.learn(1)
-
-    display.show('2')
-    while xgo.get_block() is None:
-        sleep(100)
-    xgo.learn(2)
-
-    display.clear()
-
-def caminar_amb_1_i_parar_amb_2():
-    xgo.set_algorithm(xgo.FACE)
-
-    while True:
-        blk = xgo.get_block()
-        if blk:
-            if blk["id"] == 1:
-                xgo.caminar(0xA5)
-            elif blk["id"] == 2:
-                xgo.stop()
-                return
-        sleep(120)
+def accio_4():
+    music.pitch (1000, 200)
