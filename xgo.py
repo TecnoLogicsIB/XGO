@@ -55,26 +55,23 @@ def posicio_inicial_estable():
     escriure_byte(0x3C, 0x00)
 
 # --- Locomoció ---
-def gait_walk():
+def gait_walk(gait=0x00):
     escriure_byte(0x09, 0x00)
-def gait(valor):    # permet definir el patró (gait) en l'execució
-    # gaits: 0x00, 0x01, 0x02, 0x03
-    escriure_byte(0x09, valor & 0xFF)
 
-def caminar(vel):
-    gait_walk()
+def caminar(vel,gait=0x00):
+    gait_walk(gait)
     escriure_byte(0x30, vel & 0xFF)
     escriure_byte(0x31, 0x80)
     escriure_byte(0x32, 0x80)
 
-def girar(valor):
-    gait_walk()
+def girar(valor,gait=0x00):
+    gait_walk(gait)
     escriure_byte(0x30, 0x80)
     escriure_byte(0x31, 0x80)
     escriure_byte(0x32, valor & 0xFF)
 
-def lateral(valor):
-    gait_walk()
+def lateral(valor,gait=0x00):
+    gait_walk(gait)
     escriure_byte(0x30, 0x80)
     escriure_byte(0x31, valor & 0xFF)
     escriure_byte(0x32, 0x80)
@@ -318,6 +315,7 @@ def forget():
     except:
 
         return False
+
 
 
 
