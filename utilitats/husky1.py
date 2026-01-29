@@ -16,6 +16,21 @@ else:
 if not xgo.set_algorithm(xgo.FACE):
     display.show(Image.SAD)
     sleep(1000)
+    # Si no podem posar l'algorisme, no té sentit continuar
+    raise SystemExit
+
+# --- Funció: comprova si reconeix la cara ID1 ---
+def comprova_cara():
+    b = xgo.get_block()  # None o {"x","y","w","h","id"}
+    if b:
+        # Debug opcional (per veure què retorna):
+        # print(b)
+
+        if b.get("id", -1) == 1:
+            display.show(Image.HAPPY)
+            return True
+    display.clear()
+    return False
 
 # 3) Bucle: si detecta ID1 => cara somrient
 while True:
