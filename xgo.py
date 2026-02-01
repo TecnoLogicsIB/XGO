@@ -1,5 +1,5 @@
-# xgo.py (XGO UART + HuskyLens I2C) compactat per micro:bit V2
-from microbit import uart, pin14, pin13, sleep, i2c, running_time
+# xgo.py compactat per micro:bit V2
+from microbit import uart, pin14, pin13, sleep
 
 # =======================
 # XGO (UART)
@@ -203,4 +203,5 @@ def stop_accio():
     escriure_byte(0x31, 0x80)  # left/right speed = 0
     escriure_byte(0x32, 0x80)  # yaw speed = 0
     # 3) parar "no progress / step height" (0x00 = stop)
+
     escriure_byte(0x3C, 0x00)
