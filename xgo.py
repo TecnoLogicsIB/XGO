@@ -205,3 +205,70 @@ def stop_accio():
     # 3) parar "no progress / step height" (0x00 = stop)
 
     escriure_byte(0x3C, 0x00)
+
+# ==== funcions de lectura UART ====
+
+def _uart_flush():
+    uart_inicialitzar()
+    try:
+        while uart.any():
+            uart.read()
+            sleep(1)
+    except:
+        pass
+
+def llegir_bytes(adreca, n=1, timeout_ms=60):
+    """
+    Llegeix n bytes consecutius des d'una adreça de la taula de memòria XGO.
+    Retorna un objecte bytes (longitud n) o None si falla.
+    """
+    uart_inicialitzar()
+    _uart_flush()
+
+    ln = 0x09
+    cmd = 0x02                # READ (amb resposta) :contentReference[oaicite:1]{index=1}
+    a = adreca & 0xFF
+    rl = n & 0xFF
+    c = _chk(ln, cmd, a, rl)
+
+    # Envia comanda de lectura
+    uart.write(bytes([0x55, 0x00, ln, cmd, a, rl, c, 0x00, 0xAA]))
+
+    # Llegeix resposta: 0x55 0x00 [LEN] ...
+    buf = b""
+    t = 0
+    while t < timeout_ms:
+        if uart.any():
+            chunk = uart.read()
+            if chunk:
+                buf += chunk
+
+                # Cerca capçalera
+                i = buf.find(b"\x55\x00")
+                if i != -1 and len(buf) >= i + 3:
+                    frame_len = buf[i + 2]
+                    if len(buf) >= i + frame_len:
+                        frame = buf[i:i + frame_len]
+
+                        # Validació mínima de cua
+                        if frame[-2:] == b"\x00\xAA":
+                            # Format retorn: 55 00 LEN 12 ADDR DATA... CHK 00 AA :contentReference[oaicite:2]{index=2}
+                            data_start = 5
+                            data_end = 5 + n
+                            if len(frame) >= data_end:
+                                return frame[data_start:data_end]
+                        # Si no quadra, continua intentant (potser buf tenia soroll)
+        sleep(1)
+        t += 1
+
+    return None
+
+def bateria():
+    """
+    Retorna el % de bateria (0..100) o None si no es pot llegir.
+    Adreça bateria: 0x01 :contentReference[oaicite:3]{index=3}
+    """
+    b = llegir_bytes(0x01, 1)
+    if not b:
+        return None
+    return b[0]
