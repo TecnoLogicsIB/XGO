@@ -49,5 +49,5 @@ def reconeix_veu():
     elif cmd == 8:    
         xgo.executar_accio (18)     
        
-
     sleep(500)
+
