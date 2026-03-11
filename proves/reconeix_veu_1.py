@@ -8,7 +8,7 @@ import music
 
 i2c.init(freq=100000)    # inicialització de l'I2C
 sensor = VeuDF2301Q()    # inicialització mòdul veu (DF2301Q)
-sensor.configurar (volum=7, wake_time=20, mute=False)  # wake_time: temps despert
+sensor.configurar (volum=7, wake_time=20, mute=False)  # wake_time: temps despert (segons)
 
 mode ='A'
 
@@ -49,4 +49,5 @@ def reconeix_veu():
     elif cmd == 8:    
         xgo.executar_accio (18)     
        
+
     sleep(500)
