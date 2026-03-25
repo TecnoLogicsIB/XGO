@@ -1,5 +1,5 @@
 # veu_esp32.py
-from machine import Pin, I2C
+from machine import I2C
 from time import sleep_ms
 
 DF2301Q_ADDR = 0x64
@@ -12,17 +12,16 @@ REG_WAKE_TIME = 0x06
 
 
 class VeuDF2301Q:
-    def __init__(self, scl=22, sda=21, freq=100000, addr=DF2301Q_ADDR, i2c_bus=0):
+    def __init__(self, i2c, addr=DF2301Q_ADDR):
         self.addr = addr
+        self.i2c = i2c
         self._last = 0
-        self.i2c = I2C(i2c_bus, scl=Pin(scl), sda=Pin(sda), freq=freq)
 
     def _write_reg(self, reg, val):
-        self.i2c.writeto(self.addr, bytes([reg, val & 0xFF]))
+        self.i2c.writeto_mem(self.addr, reg, bytes([val & 0xFF]))
 
     def _read_reg(self, reg):
-        self.i2c.writeto(self.addr, bytes([reg]))
-        data = self.i2c.readfrom(self.addr, 1)
+        data = self.i2c.readfrom_mem(self.addr, reg, 1)
         return data[0]
 
     def configurar(self, volum=5, wake_time=20, mute=False):
@@ -31,15 +30,10 @@ class VeuDF2301Q:
         self.set_mute(mute)
 
     def get_cmdid(self):
-        # Llegeix l’últim ID reconegut; 0 vol dir “cap comanda nova”
-        sleep_ms(10)
+        sleep_ms(50)
         return self._read_reg(REG_CMDID)
 
     def get_cmdid_nou(self):
-        """
-        Evita repetir el mateix ID si el mòdul el manté uns quants cicles.
-        Retorna 0 si no hi ha cap comanda nova.
-        """
         cmd = self.get_cmdid()
 
         if cmd != 0 and cmd != self._last:
@@ -56,11 +50,7 @@ class VeuDF2301Q:
         sleep_ms(200)
 
     def set_volume(self, vol):
-        vol = int(vol)
-        if vol < 0:
-            vol = 0
-        if vol > 7:
-            vol = 7
+        vol = max(0, min(7, int(vol)))
         self._write_reg(REG_SET_VOLUME, vol)
 
     def set_mute(self, mute):
