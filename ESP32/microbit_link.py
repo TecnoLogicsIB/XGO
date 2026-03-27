@@ -1,9 +1,9 @@
-# Definició de l'enviament de polsos des de ESP32 en funció de l'acció que volem a XGO
+# Definició de l'enviament de polsos des de ESP32-S2 en funció de l'acció que volem a XGO
 
 from machine import Pin
 from time import sleep_ms
 
-_pin_out = None    # permet definir el pin de comunicació. per defecte: 23)
+_pin_out = None    # permet definir el pin de comunicació. per defecte: 16)
 
 # durada del pols (ms) segon l'ordre a transmetre (personalitzar els noms):
 _ORDRES = {
@@ -19,7 +19,7 @@ _ORDRES = {
     "ACCIO_10": 420,
 }
 
-def init(pin_num=23):    # permet definir al main el pin de comunicació. per defecte: 23
+def init(pin_num=16):    # permet definir al main el pin de comunicació. per defecte: 16
     global _pin_out
     _pin_out = Pin(pin_num, Pin.OUT)
     _pin_out.value(0)
