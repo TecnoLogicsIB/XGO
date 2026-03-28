@@ -1,4 +1,4 @@
-# Definició de l'enviament de polsos des de ESP32-S2 en funció de l'acció que volem a XGO
+# ESP32-S2. Definició de l'enviament de polsos en funció de l'acció que volem a XGO
 
 from machine import Pin
 from time import sleep_ms
