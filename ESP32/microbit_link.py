@@ -17,6 +17,7 @@ _ORDRES = {
     "H": 340,
     "I": 380,
     "J": 420,
+    "K": 480,
 }
 
 def init(pin_num=16):    # permet definir al main el pin de comunicació. en el meu cas: 16
@@ -59,3 +60,5 @@ def i():
     envia_ordre("I")
 def j():
     envia_ordre("J")
+def k():
+    envia_ordre("K")
