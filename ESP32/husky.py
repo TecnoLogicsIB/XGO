@@ -1,5 +1,4 @@
 # husky_esp32.py
-# HuskyLens I2C for ESP32 MicroPython
 
 from machine import Pin, I2C
 from time import sleep_ms, ticks_ms, ticks_diff
