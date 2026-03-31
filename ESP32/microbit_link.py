@@ -5,7 +5,7 @@ from time import sleep_ms
 
 _pin_out = None    # permet definir el pin de comunicació. en el meu cas: 16)
 
-# durada del pols (ms) segon l'ordre a transmetre (personalitzar els noms):
+# diccionari que conté el nom i la durada (ms) dels polsos que es poden enviar:
 _ORDRES = {
     "A": 60,
     "B": 100,
@@ -25,7 +25,7 @@ def init(pin_num=16):    # permet definir al main el pin de comunicació. en el 
     _pin_out = Pin(pin_num, Pin.OUT)
     _pin_out.value(0)
 
-def envia_ordre(nom):    # funció genèrica d'enviament del pols
+def envia_ordre(nom):    # funció genèrica d'enviament de pols
     if _pin_out is None:
         init()
 
@@ -35,7 +35,7 @@ def envia_ordre(nom):    # funció genèrica d'enviament del pols
     sleep_ms(50)  
     _pin_out.value(1)   # pin alt
     sleep_ms(ms)        # manté el pin alt durant els ms corresponents a l'ordre a enviar
-    _pin_out.value(0)   # pin baix durant 50 ms (GPT recomana 100 ms)
+    _pin_out.value(0)   # pin baix durant 50 ms 
     sleep_ms(50)  
 
 # ==== funcions específiques d'enviament ====
