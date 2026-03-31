@@ -6,8 +6,7 @@ from time import sleep_ms, ticks_ms, ticks_diff
 # =========================
 # Configuració I2C ESP32
 # =========================
-# Canvia aquests pins si al teu muntatge uses uns altres.
-# Exemple habitual ESP32: scl=22, sda=21
+# Canvia aquests pins si al teu muntatge uses uns altres. Exemple habitual ESP32: scl=22, sda=21
 i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=100000)
 
 # =========================
