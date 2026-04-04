@@ -1,4 +1,4 @@
-#microbit
+#microbit_main
 from microbit import *
 import xgo
 import music    # si volem sons d'activació o el que sigui
