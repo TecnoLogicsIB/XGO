@@ -1,4 +1,4 @@
-# ESP32
+# ESP32_main
 from machine import Pin, TouchPad, I2C
 from time import sleep_ms
 import microbit_link as mb
