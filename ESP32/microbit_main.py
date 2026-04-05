@@ -80,27 +80,24 @@ def classifica(durada):
 
 while True:
     cmd = llegir_cmd()
-    
-    if cmd == "A":
-        prefix = True
-        #display.show ("A")
-        music.pitch(500, 10)
-        
-    elif not actiu:    
-        if prefix and cmd == "K":  # activació
+
+    if not actiu:    
+        if cmd == "K":       # activació
             for y in range(5):
                 display.set_pixel(0, y, 9)
+            music.pitch(1000, 50)    # indicador sonor de robot inicialitzat
             sleep(100)
             xgo.inicialitzar(0xA0)    # aqui ocupem l'UART
-            music.pitch(1000, 50)    # indicador sonor de robot inicialitzat
             actiu = True
             ultima = ""
-            prefix = False  # la A ja s'ha consumit
-        elif cmd != "":
-            prefix = False  # qualsevol altra comanda consumeix/cancela la A
-    
-    elif prefix and cmd != "":  # si el robot ja està actiu i hi havia prefix ...
-        executa (cmd)           # ... executa la comanda
-        prefix = False          # la a ja s'ha consumit
+
+    else:   # si el robot està actiu ...
+        if cmd == "A":              # si arriva A ...
+            prefix = True           # activa el prefix
+            music.pitch(500, 10)    # indicador sonor molt curt
+
+        elif cmd != "" and prefix:  # si arriva qualsevol altra comanda després de la A ...
+                executa(cmd)        # executa la comanda
+                prefix = False      # desactiva el prefix (la A ja s’ha consumit)
 
     sleep(10)
