@@ -22,19 +22,14 @@ def executa(cmd):
     # no inclourem aqui l'acció associada al pols K, perquè K només serveix per activar el robot
     if cmd == "B":    
         display.show("B")
-        xgo.executar_accio(129)  # braç
     elif cmd == "C":  
         display.show("C")
-        xgo.executar_accio(1)  # baixa cos
     elif cmd == "D":  
         display.show("D")
-        xgo.executar_accio(11)  # pipi
     elif cmd == "E":  
         display.show("E")
-        xgo.executar_accio(19)  # donar la ma
     elif cmd == "F":  
         display.show("F")
-        xgo.executar_accio(2)  # aixeca cos
     elif cmd == "G": 
         display.show("G")
     elif cmd == "H":  
