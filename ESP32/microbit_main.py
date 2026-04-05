@@ -1,5 +1,4 @@
 # microbit_main
-# resposta a comandaments de veu amb prefix
 
 from microbit import *
 import xgo
