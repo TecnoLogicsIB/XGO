@@ -4,11 +4,9 @@
 from microbit import *
 import xgo
 import music    # si volem sons d'activació o el que sigui
-#import accions
 
 ultima = ""
 actiu = False
-prefix = False  # només acceptarem una comanda si és True, en rebre un pols A
 
 # ==================================================================
 
@@ -90,14 +88,5 @@ while True:
             xgo.inicialitzar(0xA0)    # aqui ocupem l'UART
             actiu = True
             ultima = ""
-
-    else:   # si el robot està actiu ...
-        if cmd == "A":              # si arriva A ...
-            prefix = True           # activa el prefix
-            music.pitch(500, 10)    # indicador sonor molt curt
-
-        elif cmd != "" and prefix:  # si arriva qualsevol altra comanda després de la A ...
-                executa(cmd)        # executa la comanda
-                prefix = False      # desactiva el prefix (la A ja s’ha consumit)
-
+            
     sleep(10)
