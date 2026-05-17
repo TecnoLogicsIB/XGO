@@ -96,8 +96,9 @@ while True:
             prefix = True           # activa el prefix
             music.pitch(500, 10)    # indicador sonor molt curt
 
-        elif cmd != "" and prefix:  # si arriva qualsevol altra comanda després de la A ...
-                executa(cmd)        # executa la comanda
-                prefix = False      # desactiva el prefix (la A ja s’ha consumit)
+        elif cmd != "" and prefix:      # si arriva qualsevol altra comanda després de la A ...
+                music.pitch(500, 10)    # indicador sonor molt curt
+                executa(cmd)            # executa la comanda
+                prefix = False          # desactiva el prefix (la A ja s’ha consumit)
 
     sleep(10)
